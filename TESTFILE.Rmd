@@ -9,4 +9,19 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-THIS IS AFTER THE UPDATE
+## Workshop 3
+
+```{r}
+#Ctrl+Alt+I = generateR chunk
+library(tidyverse)
+library(janitor)
+library(skimr)
+
+survey <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
+
+write_csv(survey,file="survey_data.csv")
+
+
+survey%>%head()
+```
+
