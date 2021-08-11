@@ -17,11 +17,48 @@ library(tidyverse)
 library(janitor)
 library(skimr)
 
+
 survey <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-05-18/survey.csv')
 
 write_csv(survey,file="survey_data.csv")
+
+survey%>%glimpse() #summary of the data
+survey%>%skim() #review the data and report missing data and statistics
+
 
 
 survey%>%head()
 ```
 
+### Data Wrangling
+
+
+#### Filter
+
+```{r}
+survey%>%
+  filter(country == "Australia")
+
+survey_IT_au <- survey%>%
+  filter(country=="Australia"|country=="australia"|country=="australi")%>%
+  filter(industry=="Computing or Tech" & annual_salary>80000)
+
+
+ 
+```
+
+### Select
+
+```{r}
+survey_IT_au%>%
+  select(how_old_are_you, job_title, annual_salary)%>%
+  arrange(desc(annual_salary))
+
+survey_IT_au%>%
+  select(-industry)
+
+
+```
+
+
+### Ar
