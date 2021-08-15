@@ -197,3 +197,56 @@ survey_IT_au%>%
 
 ```
 
+
+
+# Extra Additional Tricks
+
+```{r}
+#1 - create new column in a count
+survey%>%
+  count(country, sort = TRUE, state, name="Counrty/State Count")
+
+# 2. Sample and randomly shuffle data with slice_sample()
+
+survey %>% 
+  slice_sample(n=2, )
+
+
+# 3. Create a date column specifying year, month, and day
+
+# 4. Parse numbers with parse_number()
+
+survey_IT_au %>% 
+  parse_number(how_old_are_you) #dont know how this works
+
+
+# 5. Select columns with starts_with, ends_with, etc.
+
+survey %>% 
+  select(starts_with("how", ignore.case = TRUE))
+
+survey %>% 
+  select(ends_with("title", ignore.case = TRUE))
+
+# 6. case_when to create or change a column when conditions are met
+
+
+
+
+# 7. str_replace_all to find and replace multiple options at once
+# 8. Transmute to create or change columns and keep only those columns
+# 9. Use pipes %>% everywhere including inside mutates
+# 10. Filter groups without making a new column
+# 11. Split a string into columns based on a regular expression
+# 12. semi_join to pick only rows from the first table which are matched in the second table
+# 13. anti_join to pick only rows from the first table which are NOT matched in the second table
+# 14. fct_reorder to sort bar charts
+# 15. coord_flip to display counts more beautifully
+# 16. fct_lump to lump some factor levels into "Other"
+# 17. Generate all combinations using crossing
+# 18. Create functions that take column names with double curly braces
+
+
+```
+
+
