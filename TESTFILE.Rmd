@@ -230,14 +230,35 @@ survey %>%
 
 # 6. case_when to create or change a column when conditions are met
 
-
+survey %>% 
+  mutate(salary_band = case_when(
+                        annual_salary <= 100000 ~ "Low", 
+                        annual_salary >100000 ~ "High"))
 
 
 # 7. str_replace_all to find and replace multiple options at once
+
+survey_IT_au%>% 
+  str_replace_all(c("Man" = "male", "Woman" = "Female"))
+
+
 # 8. Transmute to create or change columns and keep only those columns
+survey %>% 
+  transmute(Monthly_salary = annual_salary/12)
+
+
 # 9. Use pipes %>% everywhere including inside mutates
+
+
 # 10. Filter groups without making a new column
+
+
 # 11. Split a string into columns based on a regular expression
+
+survey_IT_au%>%
+  separate(how_old_are_you,c("low_age", "high_age"))
+
+
 # 12. semi_join to pick only rows from the first table which are matched in the second table
 # 13. anti_join to pick only rows from the first table which are NOT matched in the second table
 # 14. fct_reorder to sort bar charts
