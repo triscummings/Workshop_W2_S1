@@ -136,3 +136,64 @@ survey_IT_au %>%
 ```
 
 
+
+# David Robinson's tricks
+
+
+```{r}
+#Number 1 Count
+survey%>%
+  count(country, sort = TRUE, state, name="Counrty/State Count")
+
+survey%>%
+  count(country, state)
+
+#--------------------------------------------------------------
+#Number 2 - create a new variable in count
+
+survey%>%
+  count(grouped_salary = annual_salary + other_monetary_comp, sort = TRUE)
+
+#--------------------------------------------------------------
+#Number 3 - add_count - add a column that counts
+
+survey_IT_au%>%
+  group_by(gender)%>%
+  summarise(min_salary=min(annual_salary),
+            max_salary=max(annual_salary),
+            avr_salary=mean(annual_salary))%>%
+  add_count(gender)
+
+#--------------------------------------------------------------
+#Number 4 - Summarise - to create a list column
+# I dont understand this function
+
+#--------------------------------------------------------------
+#Number 5 - factor reorder
+
+#--------------------------------------------------------------
+#Number 6 - factor lump
+
+
+#--------------------------------------------------------------
+#Number 7 - scale xy log10()
+#ggplot2 function
+
+
+#--------------------------------------------------------------
+#Number 8 - Crossing
+
+#--------------------------------------------------------------
+#Number 9 - separate
+survey_IT_au%>%
+  separate(how_old_are_you,c("low_age", "high_age"))
+
+#--------------------------------------------------------------
+#Number 10 - extract
+
+survey_IT_au%>%
+  extract(overall_years_of_professional_experience, c("Low_Year", "High_Year", "Time_scale")) #I dont know how to set up the expression to extract
+
+
+```
+
