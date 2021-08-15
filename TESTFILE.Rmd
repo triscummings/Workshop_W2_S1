@@ -25,9 +25,14 @@ write_csv(survey,file="survey_data.csv")
 survey%>%glimpse() #summary of the data
 survey%>%skim() #review the data and report missing data and statistics
 
+survey %>%
+  top_n(survey, 20)
 
 
 survey%>%head()
+
+shortdata<-survey_IT_au %>%
+  transmute(total_pay = annual_salary+other_monetary_comp)
 ```
 
 ### Data Wrangling
@@ -43,22 +48,91 @@ survey_IT_au <- survey%>%
   filter(country=="Australia"|country=="australia"|country=="australi")%>%
   filter(industry=="Computing or Tech" & annual_salary>80000)
 
+survey%>%
+  filter(gender!="Man")
 
  
 ```
 
-### Select
+### Select & Arrange
 
 ```{r}
 survey_IT_au%>%
   select(how_old_are_you, job_title, annual_salary)%>%
   arrange(desc(annual_salary))
 
+survey%>%
+  distinct(industry)
+
 survey_IT_au%>%
   select(-industry)
+
+survey_IT_au%>%
+  count(highest_level_of_education_completed, sort = TRUE)
+
+
+survey_IT_au%>%
+  count(gender, city, sort=TRUE)
+
+New_data<-survey_IT_au%>%add_count(highest_level_of_education_completed, sort = TRUE)
+
+
+
+survey%>%
+  count(gender,industry, sort = TRUE)
+
+
+  
 
 
 ```
 
 
-### Ar
+#### `mutate` vs `transmute`
+
+```{r}
+
+class(survey_IT_au$annual_salary)
+
+survey_IT_au %>%
+  mutate(total_salary=annual_salary+other_monetary_comp)
+
+survey_IT_au<- survey_IT_au %>%
+  mutate(avr_salary=mean(annual_salary))
+
+#survey_IT_au_groupd <- survey_IT_au %>%
+ # group_by(city)%>%
+  #mutate(max_salary=max(annual_salary))
+  #select(how_old_are_you, job_title, city, annual_salary, avr_salary, max_salary)%>&
+   # ungroup()
+
+survey_IT_au%>%
+  summarise(min_salary=min(annual_salary))
+  
+
+survey_IT_au%>%
+  group_by(gender)%>%
+  summarise(min_salary=min(annual_salary))
+
+survey_IT_au%>%
+  group_by(gender)%>%
+  summarise(min_salary=min(annual_salary),
+            max_salary=max(annual_salary),
+            avr_salary=mean(annual_salary))%>%
+  relocate(max_salary, .after=avr_salary)
+  ungroup()
+
+
+survey_IT_au%>%
+  mutate(age=parse_number(how_old_are_you))
+  
+
+survey_IT_au <- survey_IT_au%>%
+  mutate(experience=parse_number(overall_years_of_professional_experience))
+
+survey_IT_au %>%
+  mutate(su_analyst = case_when(job_title == "Business Analyst" ~ "Yes", T ~ "No"))
+  
+```
+
+
